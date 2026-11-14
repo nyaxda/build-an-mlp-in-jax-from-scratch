@@ -116,8 +116,12 @@ def mlp_forward(params, x):
     out = linear_forward(h, params[-1])
     return out
 
-# Step 13 - log_softmax_logits (not yet solved)
-# TODO: implement
+# Step 13 - log_softmax_logits
+def log_softmax_logits(logits):
+    # TODO: return the numerically stable log-softmax of logits along the last axis.
+    s_logits = logits - jnp.max(logits, axis=-1, keepdims=True)
+    exps = jnp.exp(s_logits)
+    return s_logits - jnp.log((jnp.sum(exps, axis=-1, keepdims=True)))
 
 # Step 14 - cross_entropy_loss (not yet solved)
 # TODO: implement
