@@ -70,8 +70,15 @@ def init_linear_layer(key, in_dim, out_dim, scale=0.1):
     b = jnp.zeros((out_dim,))
     return {'W': w_out, 'b': b}
 
-# Step 8 - init_mlp_params (not yet solved)
-# TODO: implement
+# Step 8 - init_mlp_params
+def init_mlp_params(key, layer_sizes, scale=0.1):
+    # TODO: build a list of per-layer parameter dicts from adjacent layer sizes.
+    output_layers = []
+    layers = len(layer_sizes) - 1
+    subkeys = split_prng_key(key, layers)
+    for i in range(layers):
+        output_layers.append(init_linear_layer(subkeys[i], layer_sizes[i], layer_sizes[i + 1], scale))
+    return output_layers
 
 # Step 9 - linear_forward (not yet solved)
 # TODO: implement
